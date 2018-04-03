@@ -18,7 +18,7 @@ function urlInsert($params){
 		$host=parse_url('http://'.$url)['host'];
 		$url='http://'.$url;
 	}
-	$ip=trim(end(split(',',$_SERVER['HTTP_X_FORWARDED_FOR'])));
+	$ip=trim(end(explode(',',$_SERVER['HTTP_X_FORWARDED_FOR'])));
 	
 	do{
 		$ukey=ukeyGen();
