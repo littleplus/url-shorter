@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta charset="UTF-8" />
+    <title>
+      <?php echo SITE_NAME; ?>
+    </title>
+	<script src="https://ajax.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style type="text/css">
+        body{font-family:微软雅黑,arial}
+a{text-decoration:none;color:#000;font-weight:700}
+.container{margin-top:120px}
+.page{width:320px;margin-left:auto;margin-right:auto;border:1px solid #ccc;padding:20px;box-shadow:0 0 8px rgba(3,126,202,.5)}
+input[type=text]{margin-bottom:10px;height:35px;width:100%;padding:8px;font-size:16px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border:1px
+solid #ccc;background-repeat:no-repeat}
+input:focus{transition:border linear .3s,box-shadow linear .5s;-moz-transition:border linear .3s,-moz-box-shadow linear
+.5s;-webkit-transition:border linear .3s,-webkit-box-shadow linear .5s;outline:0;border-color:rgba(3,126,212,.5);box-shadow:0 0 8px
+rgba(3,126,202,.5);-moz-box-shadow:0 0 8px rgba(3,126,212,.5);-webkit-box-shadow:0 0 8px rgba(3,126,212,.3)}
+.btn{padding:8px 15px;background-color:#4169E1;transition:background-color linear .3s;border:0;color:#fff;font-weight:700}
+.btn:disabled{background-color:#6CA7DF;transition:background-color linear .3s}
+form h2{text-align:center;font-weight:700}
+form p{margin-bottom:10px;font-weight:700}
+.error{text-align:center;color:red}
+.info{text-align:center;color:#000}
+.info a{color:#6cf}
+.short{display:none;}
+a:hover{color:#00f}
+footer{text-align:center;padding:5px;font-size:20px}
+        
+</style>
+  </head>
+  <body>
+    <section class="container">
+      <form class="page" method="get">
+      <h2>
+        <?php echo SITE_NAME; ?>
+      </h2>
+      <p>原始链接</p>
+      <input class="foreurl" type="text" autocomplete="off" placeholder="例如：http://few.gs" id="q" /> 
+      <!--p>自定义后缀</p><input type="text" placeholder="例如：domain" name="alias" "暂时用不了，不用试了"-->
+      <p class="short">短链接</p>
+      <input class="short shortlink" type="text" id="shortlink" style="" readonly="readonly"/>
+      <input type="submit" class="btn btn-submit" />
+      <input type="reset" class="btn btn-reset" />
+      <input type="button" class="btn btn-copy" value="复制" data-clipboard-target="#shortlink"/></form>
+    </section>
+    <footer>
+      <p>Copyright ® 2018
+      <a href="https://www.xjh.me">岁月小筑</a> , All Rights Reserved.</p>
+    </footer>
+  <script>
+  $(function () {
+	new ClipboardJS('.btn-copy');
+	$('.page').submit(function () {
+		$('.btn-submit').attr('disabled','disabled');
+		$.ajax({
+			data: {q: $('#q').val()},
+			success: function(data) {
+				var protocol='http://';
+				if (<?php echo ENABLE_HTTPS; ?>)protocol='https://';
+				var site="<?php echo SITE_DOMAIN;?>/";
+				$('.shortlink').val(protocol+site+data.ukey);
+				$('.short').css('display','flex');
+				//console.log(data);
+			},
+			error: function(data) {
+				console.log('error');
+			},
+		});
+		return false;
+	});
+    $('.btn-submit').click(function () {
+	//	$('.btn-submit').attr('disabled','disabled');
+	});
+	$('.btn-reset').click(function () {
+		$('.short').css('display','none');
+		$('.btn-submit').removeAttr('disabled');
+	});
+	$('.foreurl').change(function () {
+		$('.btn-submit').removeAttr('disabled');
+	});
+  });
+  </script>
+  </body>
+</html>
