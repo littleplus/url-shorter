@@ -26,7 +26,7 @@ function urlInsert($params){
 	
 	global $dbc;
 	try{
-		$stmt = $dbc->prepare("INSERT INTO `url` (`domain`, `url`, `ukey`, `ip`) VALUES 
+		$stmt = $dbc->prepare("INSERT INTO `".DB_TABLE."` (`domain`, `url`, `ukey`, `ip`) VALUES 
 							(:host, :url, :ukey, :ip)");
 		$stmt->bindParam(':host',$host);
 		$stmt->bindParam(':url',$url);
@@ -52,7 +52,7 @@ function urlSelect($ukey){
 	if(ukeyCheck($ukey)){
 		global $dbc;
 		try{
-			$stmt = $dbc->prepare("SELECT `url` FROM `url` WHERE ukey = :ukey LIMIT 1");
+			$stmt = $dbc->prepare("SELECT `url` FROM `".DB_TABLE."` WHERE ukey = :ukey LIMIT 1");
 			$stmt->bindParam(':ukey',$ukey);
 			$stmt->execute();
 		} catch (Exception $e) {
@@ -81,7 +81,7 @@ function ukeyGen(){
 function ukeyCheck($ukey){
 	global $dbc;
 	try{
-		$stmt = $dbc->prepare("SELECT `ukey` FROM `url` WHERE ukey = :ukey LIMIT 1");
+		$stmt = $dbc->prepare("SELECT `ukey` FROM `".DB_TABLE."` WHERE ukey = :ukey LIMIT 1");
 		$stmt->bindParam(':ukey',$ukey);
 		$stmt->execute();
 		
