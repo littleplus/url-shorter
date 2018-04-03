@@ -4,6 +4,9 @@
 
 A modern, safe and simple PHP url shorter.
 
+## Demo:
+![http://few.gs]()
+
 ## Function:
 + Use PDO and it's Bindparam to prevent SQL Inject.
 + Use Ajax to get the short Code
@@ -28,6 +31,9 @@ A modern, safe and simple PHP url shorter.
 # 短链接
 
 一个现代、安全且简洁的PHP短链接 (PHP是世界上最好F#fIO#@($)#U)
+
+## Demo:
+![http://few.gs]()
 
 ## 功能:
 + 使用PDO和Bindparam防注入
